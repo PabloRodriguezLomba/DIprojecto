@@ -60,28 +60,28 @@ class Conexion():
     @staticmethod
     def altaCli(newcli,newcar):
         try:
-            query=QtSql.QSqlQuery()
-            query.prepare('insert into clientes (nombre,dni,alta,direccion,provincia,municipio,pago) VALUES (:nombre,:dni,:alta,:direccion,:provincia,:municipio,:pago)')
-            query.bindValue(":dni",str(newcli[0]))
-            query.bindValue(":nombre", str(newcli[1]))
-            query.bindValue(":alta", str(newcli[2]))
-            query.bindValue(":direccion", str(newcli[3]))
-            query.bindValue(":provincia", str(newcli[4]))
-            query.bindValue(":municipio", str(newcli[5]))
-            query.bindValue(":pago", str(newcli[6]))
-            if query.exec():
-                msg = QtWidgets.QMessageBox()
+            consulta = QtSql.QSqlQuery()
+            consulta.prepare('insert into clientes (nombre,dni,alta,direccion,provincia,municipio,pago) VALUES (:nombre,:dni,:alta,:direccion,:provincia,:municipio,:pago)')
+            consulta.bindValue(':dni', str(newcli[0]))
+            consulta.bindValue(':nombre', str(newcli[1]))
+            consulta.bindValue(':alta', str(newcli[2]))
+            consulta.bindValue(':direccion', str(newcli[3]))
+            consulta.bindValue(':provincia', str(newcli[4]))
+            consulta.bindValue(':municipio', str(newcli[5]))
+            consulta.bindValue(':pago', str(newcli[6]))
+            if consulta.exec():
+                esg = QtWidgets.QMessageBox()
 
-                msg.setWindowTitle('Aviso')
-                msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
-                msg.setText('Cliente  dado de Alta')
-                msg.exec()
+                esg.setWindowTitle('Aviso')
+                esg.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                esg.setText('Cliente  dado de Alta')
+                esg.exec()
             else:
                 esg = QtWidgets.QMessageBox()
                 esg.setModal(True)
                 esg.setWindowTitle('Aviso')
                 esg.setIcon(QtWidgets.QMessageBox.Icon.Warning)
-                esg.setText(query.lastError().text())
+                esg.setText(consulta.lastError().text())
                 esg.exec()
 
             query1 = QtSql.QSqlQuery()

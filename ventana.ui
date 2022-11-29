@@ -3031,6 +3031,11 @@
     <string>Alt+I</string>
    </property>
   </action>
+  <action name="ActionCambioProCar">
+   <property name="text">
+    <string>cambioprocar</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
