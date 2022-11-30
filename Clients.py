@@ -155,7 +155,7 @@ class Clientes():
             motor = Clientes.checkMotor()
             modcar.append(motor)
 
-            conexion.Conexion.modificaCli(modcli, modcar)
+            conexion.Conexion.modificarCli(modcli, modcar)
             conexion.Conexion.mostrarTabcarcli()
 
         except Exception as Error:

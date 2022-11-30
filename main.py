@@ -81,6 +81,7 @@ class Main(QtWidgets.QMainWindow):
             var.ui.ActionSalirBar.triggered.connect(events.Eventos.Salir)
             Clients.Clientes.selMotor()
             conexion.Conexion.mostrarTabcarcli()
+
             var.ui.tabClientes.setStyleSheet(
                 "QTableView::item:alternate { background-color: #C0C0C0; } QTableView::item { background-color: #d1c8c6; }")
 
@@ -88,6 +89,9 @@ class Main(QtWidgets.QMainWindow):
             var.motor = (var.ui.rbtDiesel, var.ui.rbtGasolina, var.ui.rbtHibrido, var.ui.rbtElt)
             var.ui.btnGuardarCli.clicked.connect(Clients.Clientes.guardarCli)
             var.ui.btnFechaAltaClin.clicked.connect(events.Eventos.abrirCalendar)
+            var.ui.btnBorraCli.clicked.connect(Clients.Clientes.borrarCli)
+            var.ui.btnModificarCli.clicked.connect(Clients.Clientes.modifCli)
+
 
             var.ui.txtDni.editingFinished.connect(Clients.Clientes.mostraValidodni)
             var.ui.txtNombre.editingFinished.connect(events.Eventos.letrasCapital)
@@ -101,6 +105,7 @@ class Main(QtWidgets.QMainWindow):
             var.ui.ActionRecuperarBackup.triggered.connect(events.Eventos.restaurarBackup)
             var.ui.ActionExportar_Datos.triggered.connect(events.Eventos.exportarDatos)
             var.ui.ActionImportarDatos.triggered.connect(events.Eventos.importarDatos)
+
 
 '''
             var.ui.actionSalir.triggered.connect(events.Eventos.Salir)

@@ -122,14 +122,14 @@ class Conexion():
                     var.ui.tabClientes.setItem(index, 2, QtWidgets.QTableWidgetItem(str(query.value(2))))
                     var.ui.tabClientes.setItem(index, 3, QtWidgets.QTableWidgetItem(str(query.value(3))))
                     var.ui.tabClientes.setItem(index, 4, QtWidgets.QTableWidgetItem(str(query.value(4))))
-                    var.ui.tabClientes.item(index,1).setTextAligment(QtCore.Qt.AligmentFlag.AlignCenter)
-                    var.ui.tabClientes.item(index, 2).setTextAligment(QtCore.Qt.AligmentFlag.AlignCenter)
-                    var.ui.tabClientes.item(index, 3).setTextAligment(QtCore.Qt.AligmentFlag.AlignCenter)
-                    var.ui.tabClientes.item(index, 4).setTextAligment(QtCore.Qt.AligmentFlag.AlignCenter)
+                    var.ui.tabClientes.item(index, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                    var.ui.tabClientes.item(index, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                    var.ui.tabClientes.item(index, 3).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                    var.ui.tabClientes.item(index, 4).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                     index +=1
         except Exception as error:
             print('Problema al mostrar listado clientes')
-    def borrarCli(dni,fecha):
+    def borrarCli(dni):
         try:
 
             fecha = datetime.today()
@@ -140,21 +140,21 @@ class Conexion():
             query.bindValue(':fecha',str(fecha))
             query.bindValue(':dni', str(dni))
             if query.exec():
-                pass
+               pass
 
-            query1 = QtSql.QSqlQuery
+            query1 = QtSql.QSqlQuery()
             query1.prepare("update coches set fechabajacar = :fecha where dnicli = :dni")
             query1.bindValue(":fecha",str(fecha))
             query1.bindValue(":dni",str(dni))
             if query1.exec():
                 msg = QtWidgets.QMessageBox()
-                msg.setWindowsTittle('Aviso')
+                msg.setWindowTitle('Aviso')
                 msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 msg.setText("Borrado con exito")
                 msg.exec()
             else:
                 msg = QtWidgets.QMessageBox()
-                msg.setWindowsTittle('Aviso')
+                msg.setWindowTitle('Aviso')
                 msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 msg.setText(query1.lastError().text())
                 msg.exec()
@@ -177,13 +177,13 @@ class Conexion():
             query.bindValue(':pago', str(modcli[6]))
             if query.exec():
                 msg = QtWidgets.QMessageBox()
-                msg.setWindowTittle('Aviso')
+                msg.setWindowTitle('Aviso')
                 msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 msg.setText("Datos Cliente Modificados")
                 msg.exec()
             else:
                 msg = QtWidgets.QMessageBox()
-                msg.setWindowTittle('Aviso')
+                msg.setWindowTitle('Aviso')
                 msg.setIcon(QtWidgets.QMessageBox.Icon.Warning)
                 msg.setText(query.lastError().text())
                 msg.exec()
@@ -196,13 +196,13 @@ class Conexion():
             query1.bindValue(":matricula", str(modcar[0]))
             if query1.exec():
                 msg = QtWidgets.QMessageBox()
-                msg.setWindowTittle('Aviso')
+                msg.setWindowTitle('Aviso')
                 msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 msg.setText("Datos Cliente Modificados")
                 msg.exec()
             else:
                 msg = QtWidgets.QMessageBox()
-                msg.setWindowTittle('Aviso')
+                msg.setWindowTitle('Aviso')
                 msg.setIcon(QtWidgets.QMessageBox.Icon.Warning)
                 msg.setText(query1.lastError().text())
                 msg.exec()
@@ -210,3 +210,4 @@ class Conexion():
 
         except Exception as error:
             print("Error en modificarCli as ",error)
+
