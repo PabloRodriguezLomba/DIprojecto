@@ -15,9 +15,9 @@ class Ui_dlgcalendar(object):
         dlgcalendar.resize(247, 190)
         dlgcalendar.setMinimumSize(QtCore.QSize(247, 190))
         dlgcalendar.setMaximumSize(QtCore.QSize(247, 190))
-        self.calendarWidget = QtWidgets.QCalendarWidget(dlgcalendar)
-        self.calendarWidget.setGeometry(QtCore.QRect(0, 0, 247, 181))
-        self.calendarWidget.setObjectName("calendarWidget")
+        self.Calendario = QtWidgets.QCalendarWidget(dlgcalendar)
+        self.Calendario.setGeometry(QtCore.QRect(0, 0, 247, 181))
+        self.Calendario.setObjectName("Calendario")
 
         self.retranslateUi(dlgcalendar)
         QtCore.QMetaObject.connectSlotsByName(dlgcalendar)

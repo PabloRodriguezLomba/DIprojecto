@@ -188,7 +188,7 @@ class Conexion():
                 msg.setText(query.lastError().text())
                 msg.exec()
             query1 = QtSql.QSqlQuery()
-            query1.prepare('update coches set dnicli = :dni,marca = :marca,modelo = :modelo,motor = :motor where matricula = :matricula')
+            query1.prepare('update coches set dnicli = :dni , marca = :marca , modelo = :modelo, motor = :motor where matricula = :matricula')
             query1.bindValue(":dni",str(modcli[0]))
             query1.bindValue(":marca", str(modcar[1]))
             query1.bindValue(":modelo", str(modcar[2]))

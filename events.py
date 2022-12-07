@@ -52,7 +52,10 @@ class Eventos:
             try:
                 var.dlgcalendar.show()
                 if var.dlgcalendar.exec():
+
+
                     sys.exit()
+
                 else:
                     var.dlgcalendar.hide()
             except Exception as error:

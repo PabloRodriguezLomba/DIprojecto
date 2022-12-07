@@ -25,7 +25,7 @@
   <property name="windowTitle">
    <string>calendar</string>
   </property>
-  <widget class="QCalendarWidget" name="calendarWidget">
+  <widget class="QCalendarWidget" name="Calendario">
    <property name="geometry">
     <rect>
      <x>0</x>
