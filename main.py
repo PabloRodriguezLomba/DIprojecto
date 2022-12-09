@@ -32,17 +32,18 @@ class DialogCalendar(QtWidgets.QDialog):
         dia = datetime.datetime.now().day
         mes = datetime.datetime.now().month
         ano = datetime.datetime.now().year
-        var.dlgcalendar.calendarWidget.setSelectedDate(QtCore.QDate(ano,mes,dia))
-        '''
-        var.dlgcalendar.calendarWidget.clicked.connect(Clients.ClientesabrirCalendar)
-        '''
+        var.dlgcalendar.Calendario.setSelectedDate(QtCore.QDate(ano,mes,dia))
+
+
+        var.dlgcalendar.Calendario.clicked.connect(Clients.Clientes.abrirCalendar)
+
 
 
     def cargaFecha(qDate):
         try:
             data = ('{0}/{1}/{2}'.format(qDate.day(),qDate.mont(),qDate.year()))
             var.ui.txtFechaAltaClin.setText(str(data))
-            var.dlgcalendar
+            var.ui.txtFechaAltaClin.setText()
         except Exception as error:
             print('Error cargar fecha alta cliente  ',error)
 

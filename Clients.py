@@ -106,6 +106,7 @@ class Clientes():
             newcar.append(motor)
 
             conexion.Conexion.altaCli(newcli, newcar)
+            conexion.Conexion.mostrarTabcarcli()
         except Exception as error:
             print('error')
 
@@ -160,3 +161,11 @@ class Clientes():
 
         except Exception as Error:
             print("Error modificar datos clientes y sus coches ",Error)
+
+    def abrirCalendar(self = None):
+        try:
+            cadena = ''
+            cadena = var.dlgcalendar.Calendario.selectedDate()
+            var.ui.txtFechaAltaClin.setText(str(cadena))
+        except Exception as Error:
+            print("Error en abrirCalendar ",Error)
