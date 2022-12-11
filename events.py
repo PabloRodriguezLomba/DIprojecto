@@ -6,7 +6,7 @@ import xlrd
 import xlwt
 import zipfile39
 from PyQt6 import QtSql
-from PyQt6.uic.properties import QtWidgets
+from PyQt6 import QtWidgets
 
 import Clients
 import conexion
@@ -70,14 +70,14 @@ class Eventos:
 
                 directorio, filename = var.dlgAbrir.getSaveFileName(None,'Guardar Copia',copia,' .zip')
 
-                if var.dlgAbrir.Accepted and filename != '':
+                if var.dlgAbrir.accept and filename != '':
                     finchzip = zipfile.ZipFile(copia, 'w')
                     finchzip.write(var.bbdd, os.path.basename(var.bbdd),zipfile39.ZIP_DEFLATED)
                     finchzip.close()
                     shutil.move(str(copia),str(directorio))
                     msg = QtWidgets.QMessageBox()
                     msg.setModal(True)
-                    msg.setWindowTittle('Arise')
+                    msg.setWindowTitle('Arise')
                     msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
                     msg.setText('copia de Seguridad creada')
                     msg.exec()
@@ -85,17 +85,17 @@ class Eventos:
                 print('Error crear backup', error)
         def restaurarBackup(self):
             try:
-                filename = var.dlgAbrir.getOpenFileName(None,'Restaurar Copia Seguiridad','','*_zip::ALL Files')
+                filename = var.dlgAbrir.getOpenFileName(None,'Restaurar Copia Seguiridad','','*.zip;;All Files (*)')
                 if var.dlgAbrir.accept and filename != '':
                     file = filename[0]
                     with zipfile.ZipFile(str(file),'r') as bbdd:
-                        bbdd.extractall(pad=None)
+                        bbdd.extractall()
                     bbdd.close()
                 conexion.Conexion.conexion()
                 conexion.Conexion.mostrarTabcarcli()
                 msg = QtWidgets.QMessageBox()
                 msg.setModal(True)
-                msg.setWindowTittle('Aviso')
+                msg.setWindowTitle('Aviso')
                 msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 msg.setText('Copia de Seguridad Restaurada')
                 msg.exec()
@@ -109,19 +109,26 @@ class Eventos:
                 file = (str(fecha) + ' _Clientes.xls')
                 directorio,filename = var.dlgAbrir.getSaveFileName(None,'Guardar Datos',file, '.xls')
 
-                wb = xlwt.Workbook();
+                wb = xlwt.Workbook()
                 sheet1 = wb.add_sheet('Clientes')
                 sheet1.write(0,0,'DNI')
                 sheet1.write(0,1,'Nombre')
                 sheet1.write(0,2,'Fecha Alta')
                 sheet1.write(0,3,'Direccion')
                 sheet1.write(0,4,'Provincia')
-                sheet1.wirte(0,5,'Municipio')
+                sheet1.write(0,5,'Municipio')
                 sheet1.write(0,6,'Forma de pago')
+                sheet1.write(0,7,'Matricula')
+                sheet1.write(0,8,'marca')
+                sheet1.write(0,9,'modelo')
+                sheet1.write(0,10,'motor')
+                sheet1.write(0,11,'fechabajacar')
                 fila = 1
                 query = QtSql.QSqlQuery()
+                queryD = QtSql.QSqlQuery()
                 query.prepare('select * from clientes order by dni')
-                if query.exec() :
+                queryD.prepare('select * from coches order by dnicli')
+                if query.exec() and queryD.exec() :
                     while query.next():
                         sheet1.write(fila,0,str(query.value(0)))
                         sheet1.write(fila, 1, str(query.value(1)))
@@ -130,11 +137,17 @@ class Eventos:
                         sheet1.write(fila, 4, str(query.value(4)))
                         sheet1.write(fila, 5, str(query.value(5)))
                         sheet1.write(fila, 6, str(query.value(6)))
-                        fila = 2
+                        if queryD.next():
+                            sheet1.write(fila, 7,str(queryD.value(0)))
+                            sheet1.write(fila, 8, str(queryD.value(2)))
+                            sheet1.write(fila, 9, str(queryD.value(3)))
+                            sheet1.write(fila, 10, str(queryD.value(4)))
+                            sheet1.write(fila, 10, str(queryD.value((5))))
+                        fila +=1
                 if (wb.save(directorio)):
                     msq = QtWidgets.QMessageBox()
                     msq.setModal(True)
-                    msq.setWindowTittle('Aviso')
+                    msq.setWindowTitle('Aviso')
                     msq.setIcon(QtWidgets.QMessageBox.Icon.Information)
                     msq.setText('Exportacion de Datos Realizada')
                     msq.exec()
@@ -146,28 +159,39 @@ class Eventos:
             try:
                 filename = var.dlgAbrir.getOpenFileName(None, 'Importar datos:','',' *.xls;;All Files (*)')
 
-                if var.dlgDatos.Accepted and filename != '':
+                if var.dlgDatos.accept and filename != '':
                     file = filename[0]
                     documento = xlrd.open_workbook(file)
                     datos = documento.sheet_by_index(0)
                     files = datos.nrows
                     columns = datos.ncols
-                    new = []
+
+                    query = QtSql.QSqlQuery()
+                    queryOne = QtSql.QSqlQuery()
+                    query.prepare('delete from clientes')
+                    queryOne.prepare('delete from coches')
+                    query.exec()
+                    queryOne.exec()
+
+
                     for i in range(files):
                         if i == 0:
                             pass
                         else:
                             new = []
-                            for j in range(columns):
-                                new.append(str(datos.call_value(i,j)))
-                                if Clients.Clientes.validarDNI(str(new(0))):
-                                    conexion.Conexion.altaExcelCoche(new)
+                            car = []
+                            for j in range(6):
+                                new.append(str(datos.cell_value(i,j)))
+                            for u in range(4):
+                                car.append(str(datos.cell_value(i,6 + u)))
+
+                    conexion.Conexion.altaCli(new,car)
                 conexion.Conexion.mostrarTabcarcli()
                 msg = QtWidgets.QMessageBox()
                 msg.setModal(True)
-                msg.setWindowTittle('Aviso')
+                msg.setWindowTitle('Aviso')
                 msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 msg.setText('Importacion de Datos Realizada')
                 msg.exec()
             except Exception as error:
-                print("error al importar datos " + error)
+                print("error al importar datos " , error)

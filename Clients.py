@@ -1,6 +1,6 @@
 import conexion
 import var
-
+from   dlgcalendar import   Ui_dlgcalendar
 
 class Clientes():
     '''
@@ -8,6 +8,7 @@ class Clientes():
     :return boolean
     '''
 
+    @staticmethod
     def validarDNI(dni):
         try:
             numeros = '1234567890'
@@ -162,10 +163,15 @@ class Clientes():
         except Exception as Error:
             print("Error modificar datos clientes y sus coches ",Error)
 
-    def abrirCalendar(self = None):
+
+
+    def cargaFecha(qDate):
         try:
-            cadena = ''
-            cadena = var.dlgcalendar.Calendario.selectedDate()
-            var.ui.txtFechaAltaClin.setText(str(cadena))
-        except Exception as Error:
-            print("Error en abrirCalendar ",Error)
+            data = ('{0}/{1}/{2}'.format(qDate.day(), qDate.month(), qDate.year()))
+            var.ui.txtFechaAltaClin.setText(str(data))
+            var.dlgcalendar.hide()
+
+
+        except Exception as error:
+            print('Error cargar fecha alta cliente  ', error)
+

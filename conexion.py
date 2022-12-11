@@ -211,3 +211,14 @@ class Conexion():
         except Exception as error:
             print("Error en modificarCli as ",error)
 
+    def altaExcelCoche(self):
+        try:
+            query = QtSql.QSqlQuery()
+            queryOne = QtSql.QSqlQuery()
+            query.prepare('delete from clientes')
+            queryOne.prepare('delete from coches')
+            query.exec()
+            queryOne.exec()
+        except Exception as Error:
+            print("error en altaExcelCoche",Error)
+

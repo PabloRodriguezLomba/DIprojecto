@@ -35,17 +35,12 @@ class DialogCalendar(QtWidgets.QDialog):
         var.dlgcalendar.Calendario.setSelectedDate(QtCore.QDate(ano,mes,dia))
 
 
-        var.dlgcalendar.Calendario.clicked.connect(Clients.Clientes.abrirCalendar)
+        var.dlgcalendar.Calendario.clicked.connect(Clients.Clientes.cargaFecha)
 
 
 
-    def cargaFecha(qDate):
-        try:
-            data = ('{0}/{1}/{2}'.format(qDate.day(),qDate.mont(),qDate.year()))
-            var.ui.txtFechaAltaClin.setText(str(data))
-            var.ui.txtFechaAltaClin.setText()
-        except Exception as error:
-            print('Error cargar fecha alta cliente  ',error)
+
+
 
 
 
@@ -75,6 +70,7 @@ class Main(QtWidgets.QMainWindow):
             var.avisosalir = DialogoSalir()
             var.dlgcalendar = DialogCalendar()
             var.dlgAbrir = FileDialogAbrir()
+            var.dlgDatos = DialogoDatos()
             conexion.Conexion.conexion()
             conexion.Conexion.cargarProv()
             var.ui.cmbProcli.currentIndexChanged.connect(conexion.Conexion.selMuni)

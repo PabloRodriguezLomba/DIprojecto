@@ -2382,7 +2382,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../.designer/backup/img/icono.png</normaloff>../../.designer/backup/img/icono.png</iconset>
+           <normaloff>img/icono.png</normaloff>img/icono.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -2965,10 +2965,10 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="ActionSalirBar"/>
    <addaction name="ActionRecuperarBackup"/>
    <addaction name="ActionCrearBackup"/>
    <addaction name="separator"/>
+   <addaction name="ActionSalirBar"/>
   </widget>
   <action name="actionSalir">
    <property name="text">
@@ -2981,7 +2981,7 @@
   <action name="ActionSalirBar">
    <property name="icon">
     <iconset>
-     <normaloff>../../.designer/backup/img/salir.png</normaloff>../../.designer/backup/img/salir.png</iconset>
+     <normaloff>img/salir.png</normaloff>img/salir.png</iconset>
    </property>
    <property name="text">
     <string>salir</string>
@@ -3000,16 +3000,16 @@
   <action name="ActionRecuperarBackup">
    <property name="icon">
     <iconset>
-     <normaloff>../../.designer/backup/img/recovering.png</normaloff>../../.designer/backup/img/recovering.png</iconset>
+     <normaloff>img/recovering.png</normaloff>img/recovering.png</iconset>
    </property>
    <property name="text">
-    <string/>
+    <string>RecuperarBackup</string>
    </property>
   </action>
   <action name="ActionCrearBackup">
    <property name="icon">
     <iconset>
-     <normaloff>../../.designer/backup/img/input.png</normaloff>../../.designer/backup/img/input.png</iconset>
+     <normaloff>img/input.png</normaloff>img/input.png</iconset>
    </property>
    <property name="text">
     <string>CrearBackup</string>
