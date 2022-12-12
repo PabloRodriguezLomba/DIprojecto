@@ -211,14 +211,38 @@ class Conexion():
         except Exception as error:
             print("Error en modificarCli as ",error)
 
-    def altaExcelCoche(self):
+    @staticmethod
+    def altaExcelCoche(newcli,newcar):
         try:
-            query = QtSql.QSqlQuery()
-            queryOne = QtSql.QSqlQuery()
-            query.prepare('delete from clientes')
-            queryOne.prepare('delete from coches')
-            query.exec()
-            queryOne.exec()
+            consulta = QtSql.QSqlQuery()
+            consulta.prepare(
+                'insert into clientes (nombre,dni,alta,direccion,provincia,municipio,pago) VALUES (:nombre,:dni,:alta,:direccion,:provincia,:municipio,:pago)')
+            consulta.bindValue(':dni', str(newcli[1]))
+            consulta.bindValue(':nombre', str(newcli[0]))
+            consulta.bindValue(':alta', str(newcli[2]))
+            consulta.bindValue(':direccion', str(newcli[3]))
+            consulta.bindValue(':provincia', str(newcli[4]))
+            consulta.bindValue(':municipio', str(newcli[5]))
+            consulta.bindValue(':pago', str(newcli[6]))
+            if consulta.exec():
+              pass
+            else:
+               print('oh no')
+            if newcar[0] == '':
+                pass
+            else:
+                query1 = QtSql.QSqlQuery()
+                query1.prepare(
+                    'insert into coches (matricula,dnicli,marca,modelo,motor) VALUES (:matricula,:dnicli,:marca,:modelo,:motor)')
+                query1.bindValue(':matricula', str(newcar[0]))
+                query1.bindValue(':dnicli', str(newcli[1]))
+                query1.bindValue(':marca', str(newcar[1]))
+                query1.bindValue(':modelo', str(newcar[2]))
+                query1.bindValue(':motor', str(newcar[3]))
+                if query1.exec():
+                    pass
+                else:
+                    print('oh no')
         except Exception as Error:
             print("error en altaExcelCoche",Error)
 

@@ -180,12 +180,11 @@ class Eventos:
                         else:
                             new = []
                             car = []
-                            for j in range(6):
+                            for j in range(7):
                                 new.append(str(datos.cell_value(i,j)))
                             for u in range(4):
-                                car.append(str(datos.cell_value(i,6 + u)))
-
-                    conexion.Conexion.altaCli(new,car)
+                                car.append(str(datos.cell_value(i,7 + u)))
+                            conexion.Conexion.altaExcelCoche(new,car)
                 conexion.Conexion.mostrarTabcarcli()
                 msg = QtWidgets.QMessageBox()
                 msg.setModal(True)
