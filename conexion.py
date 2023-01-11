@@ -246,3 +246,90 @@ class Conexion():
         except Exception as Error:
             print("error en altaExcelCoche",Error)
 
+    def mostrarTabServicios(self=None):
+        try:
+            var.ui: Ui_ventana
+            index = 0
+            query = QtSql.QSqlQuery()
+            query.prepare('select * from servicios order by Codigo')
+            if query.exec():
+                while query.next():
+                    var.ui.tabServicios.setRowCount(index + 1)
+                    var.ui.tabServicios.setItem(index, 0, QtWidgets.QTableWidgetItem(str(query.value(0))))
+                    var.ui.tabServicios.setItem(index, 1, QtWidgets.QTableWidgetItem(str(query.value(1))))
+                    var.ui.tabServicios.setItem(index, 2, QtWidgets.QTableWidgetItem(str(query.value(2))))
+                    var.ui.tabServicios.item(index, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                    var.ui.tabServicios.item(index, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                    var.ui.tabServicios.item(index, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                    index += 1
+        except Exception as error:
+            print('Problema al mostrar listado clientes')
+
+    @staticmethod
+    def AltaServicio(Concept,Precio):
+        try:
+
+           query = QtSql.QSqlQuery()
+           query.prepare('insert into servicios (Concepto,Precio) VALUES (:Concepto,:Precio)')
+           query.bindValue(':Concepto',str(Concept))
+           query.bindValue(':Precio',str(Precio))
+
+           if query.exec():
+               msg = QtWidgets.QMessageBox()
+               msg.setWindowTitle('Aviso')
+               msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
+               msg.setText("Datos del servicio Guardados con exito")
+               msg.exec()
+           else:
+               msg = QtWidgets.QMessageBox()
+               msg.setWindowTitle('Aviso')
+               msg.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+               msg.setText(query.lastError().text())
+               msg.exec()
+        except Exception as Error:
+            print('Error al dar de  alta a un servicio ' ,Error)
+
+    @staticmethod
+    def ModificarServicio(Concept, Precio,codigo):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare('Update servicios set Concepto = :Concepto , Precio = :Precio where codigo = :codigo')
+            query.bindValue(':Concepto', str(Concept))
+            query.bindValue(':Precio', str(Precio))
+            query.bindValue(':codigo',str(codigo))
+            if query.exec():
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                msg.setText("Datos del servicio Modificados con exito")
+                msg.exec()
+            else:
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                msg.setText(query.lastError().text())
+                msg.exec()
+        except Exception as Error:
+            print('Error al dar de  alta a un servicio ', Error)
+
+    @staticmethod
+    def BorrarServicio(codigo):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare('Delete from servicios where codigo = :codigo')
+            query.bindValue(':codigo',codigo)
+            if query.exec():
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                msg.setText("Datos del servicio Borrados con exito")
+                msg.exec()
+            else:
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                msg.setText(query.lastError().text())
+                msg.exec()
+        except Exception as Error:
+            print('Error al dar de  alta a un servicio ', Error)
+

@@ -8,4 +8,6 @@ global avisosalir
 global dlgcalendar
 global dlgAbrir
 global dlgDatos
+global dlgBuscar
 global bbdd
+global report

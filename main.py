@@ -4,15 +4,16 @@ import datetime
 import app as app
 
 import Clients
+import Informes
 import conexion
 import events
+from dlgBuscarSer import Ui_DialogBuscarSer
 from dlgDatos import Ui_dlgExportarDatos
 from dlgcalendar import Ui_dlgcalendar
 from ventana import *
 import sys
 import var
 from dlgSalir import *
-
 
 
 class FileDialogAbrir(QtWidgets.QFileDialog):
@@ -38,6 +39,15 @@ class DialogCalendar(QtWidgets.QDialog):
         var.dlgcalendar.Calendario.clicked.connect(Clients.Clientes.cargaFecha)
 
 
+
+class DialogoBuscarSer(QtWidgets.QDialog):
+
+    def __init__(self):
+        super(DialogoBuscarSer,self).__init__()
+        var.dlgBuscar = Ui_DialogBuscarSer()
+        var.dlgBuscar.setupUi(self)
+
+        var.dlgBuscar.btnBuscarPorNombre.clicked.connect(events.Eventos.BuscarSer)
 
 
 
@@ -71,6 +81,7 @@ class Main(QtWidgets.QMainWindow):
             var.dlgcalendar = DialogCalendar()
             var.dlgAbrir = FileDialogAbrir()
             var.dlgDatos = DialogoDatos()
+            var.dlgBuscar = DialogoBuscarSer()
             conexion.Conexion.conexion()
             conexion.Conexion.cargarProv()
             var.ui.cmbProcli.currentIndexChanged.connect(conexion.Conexion.selMuni)
@@ -78,16 +89,27 @@ class Main(QtWidgets.QMainWindow):
             var.ui.ActionSalirBar.triggered.connect(events.Eventos.Salir)
             Clients.Clientes.selMotor()
             conexion.Conexion.mostrarTabcarcli()
-
+            conexion.Conexion.mostrarTabServicios()
+            header = var.ui.tabClientes.horizontalHeader()
+            header.setSectionResizeMode(QtWidgets.QHeaderView.sectionResizeMode(header, 0).Stretch)
+            header2 = var.ui.tabServicios.horizontalHeader()
+            header2.setSectionResizeMode(QtWidgets.QHeaderView.sectionResizeMode(header2, 0).Stretch)
             var.ui.tabClientes.setStyleSheet(
                 "QTableView::item:alternate { background-color: #C0C0C0; } QTableView::item { background-color: #d1c8c6; }")
-
+            var.ui.tabServicios.setStyleSheet(
+                "QTableView::item:alternate { background-color: #C0C0C0; } QTableView::item { background-color: #d1c8c6; }")
 
             var.motor = (var.ui.rbtDiesel, var.ui.rbtGasolina, var.ui.rbtHibrido, var.ui.rbtElt)
             var.ui.btnGuardarCli.clicked.connect(Clients.Clientes.guardarCli)
             var.ui.btnFechaAltaClin.clicked.connect(events.Eventos.abrirCalendar)
             var.ui.btnBorraCli.clicked.connect(Clients.Clientes.borrarCli)
             var.ui.btnModificarCli.clicked.connect(Clients.Clientes.modifCli)
+            var.ui.btnLimpiarClin.clicked.connect(Clients.Clientes.limpiaCli)
+            var.ui.btnGuardarServ.clicked.connect(Clients.Clientes.GuardarServ)
+            var.ui.btnModServ.clicked.connect(Clients.Clientes.ModServ)
+            var.ui.btnBorrarServ.clicked.connect(Clients.Clientes.BorrarServ)
+            var.ui.tabServicios.clicked.connect(Clients.Clientes.mostrarFormSer)
+            var.ui.btnBuscarServicio.clicked.connect(events.Eventos.abrirBuscar)
 
 
             var.ui.txtDni.editingFinished.connect(Clients.Clientes.mostraValidodni)
@@ -102,8 +124,9 @@ class Main(QtWidgets.QMainWindow):
             var.ui.ActionRecuperarBackup.triggered.connect(events.Eventos.restaurarBackup)
             var.ui.ActionExportar_Datos.triggered.connect(events.Eventos.exportarDatos)
             var.ui.ActionImportarDatos.triggered.connect(events.Eventos.importarDatos)
-
-
+            var.ui.actionExportar_Servicios.triggered.connect(events.Eventos.exportarServicios)
+            var.ui.actionListado_de_Clientes.triggered.connect(Informes.Informes.listClientes)
+            var.ui.actionListado_de_Coches.triggered.connect(Informes.Informes.listCoches)
 '''
             var.ui.actionSalir.triggered.connect(events.Eventos.Salir)
             var.ui.txtDni.editingFinished.connect(Clients.Clientes.mostraValidodni)

@@ -7,6 +7,7 @@ import xlwt
 import zipfile39
 from PyQt6 import QtSql
 from PyQt6 import QtWidgets
+from PyQt6 import QtCore
 
 import Clients
 import conexion
@@ -194,3 +195,71 @@ class Eventos:
                 msg.exec()
             except Exception as error:
                 print("error al importar datos " , error)
+
+        def exportarServicios(self):
+            try:
+                fecha = datetime.today()
+                fecha = fecha.strftime('%Y.%m.%d.%H.%M.%S')
+                file = (str(fecha) + ' _Servicios.xls')
+                directorio, filename = var.dlgAbrir.getSaveFileName(None, 'Guardar Servicios', file, '.xls')
+
+                wb = xlwt.Workbook()
+                sheet1 = wb.add_sheet('servicios')
+                sheet1.write(0, 0, 'Codigo')
+                sheet1.write(0, 1, 'Concepto')
+                sheet1.write(0, 2, 'Precio-Unidad')
+                fila = 1
+                query = QtSql.QSqlQuery()
+
+                query.prepare('select * from servicios order by Codigo')
+
+                if query.exec():
+                    while query.next():
+                        sheet1.write(fila, 0, str(query.value(0)))
+                        sheet1.write(fila, 1, str(query.value(1)))
+                        sheet1.write(fila, 2, str(query.value(2)))
+                        fila += 1
+                if (wb.save(directorio)):
+                    msq = QtWidgets.QMessageBox()
+                    msq.setModal(True)
+                    msq.setWindowTitle('Aviso')
+                    msq.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                    msq.setText('Exportacion de Datos Realizada')
+                    msq.exec()
+            except Exception as Error:
+                print('Error en exportarServicios',Error)
+
+        @staticmethod
+        def BuscarSer(text):
+            try:
+                query = QtSql.QSqlQuery()
+                query.prepare('select * from servicios where Concepto = :Concepto')
+                query.bindValue(':Concepto',text)
+                if query.exec():
+                    var.ui.lbCodigo.setText(str(query.value(0)))
+                    var.ui.txtConcepto.setText(str(query.value(1)))
+                    var.ui.txtPrecioUnidad.setText(str(query.value(2)))
+                    var.ui.tabServicios.clear()
+                    index = 0
+                    while query.next():
+                        var.ui.tabServicios.setRowCount(index + 1)
+                        var.ui.tabServicios.setItem(index, 0, QtWidgets.QTableWidgetItem(str(query.value(0))))
+                        var.ui.tabServicios.setItem(index, 1, QtWidgets.QTableWidgetItem(str(query.value(1))))
+                        var.ui.tabServicios.setItem(index, 2, QtWidgets.QTableWidgetItem(str(query.value(2))))
+                        var.ui.tabServicios.item(index, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                        var.ui.tabServicios.item(index, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                        var.ui.tabServicios.item(index, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                        index += 1
+
+            except Exception as Error:
+                print('Error en buscarSer',Error)
+
+        def abrirBuscar(self = None):
+            try:
+                var.dlgBuscar.show()
+                if var.dlgBuscar.exec():
+                    sys.exit()
+                else:
+                    var.dlgBuscar.hide()
+            except Exception as Error:
+                print('Error en AbrirBuscar ',Error)

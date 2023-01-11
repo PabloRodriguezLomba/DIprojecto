@@ -113,12 +113,17 @@ class Clientes():
 
     def limpiaCli(self=None):
         try:
-            cliente = [var.ui.txtDni, var.ui.txtNombre, var.ui.txtDircli, var.ui.txtFechaAltaClin, var.ui.txtCar,
+            cliente = [var.ui.txtDni, var.ui.txtNombre, var.ui.txtDircli, var.ui.txtFechaAltaClin, var.ui.txtMatricula,
                        var.ui.txtMarca, var.ui.txtModelo]
             for i in cliente:
                 i.setText(' ')
             if var.ui.chkTransferencia.isChecked():
-                i.setChecked(False)
+                var.ui.chkTransferencia.setCheckable()
+            elif var.ui.chkEfectivo.isChecked():
+                var.ui.chkEfectivo.setCheckable()
+            elif var.ui.chkTarjeta.isChecked():
+                var.ui.chkTarjeta.setCheckable()
+
 
         except Exception as error:
             print('Error limpiar cliente', error)
@@ -175,3 +180,43 @@ class Clientes():
         except Exception as error:
             print('Error cargar fecha alta cliente  ', error)
 
+
+    def GuardarServ(self):
+        try:
+            Con = var.ui.txtConcepto.text()
+            Precio = var.ui.txtPrecioUnidad.text()
+            if Precio.__contains__(','):
+                pass
+            else:
+                Precio += ',00'
+            conexion.Conexion.AltaServicio(Con,Precio)
+            conexion.Conexion.mostrarTabServicios()
+        except Exception as Error:
+            print('Error en GuardarServ ',Error)
+    def ModServ(self):
+        try:
+            codigo = var.ui.lbCodigo.text()
+            Con = var.ui.txtConcepto.text()
+            Precio = var.ui.txtPrecioUnidad.text()
+            conexion.Conexion.ModificarServicio(Con, Precio,codigo)
+            conexion.Conexion.mostrarTabServicios()
+        except Exception as Error:
+            print('Error en ModServ ',Error)
+    def BorrarServ(self):
+        try:
+            codigo = var.ui.lbCodigo.text()
+            conexion.Conexion.BorrarServicio(codigo)
+            conexion.Conexion.mostrarTabServicios()
+        except Exception as Error:
+            print('Error en ModServ ',Error)
+
+    def mostrarFormSer(self):
+        try:
+            row = var.ui.tabServicios.row(var.ui.tabServicios.currentItem())
+            var.ui.lbCodigo.setText(var.ui.tabServicios.item(row,0).text())
+            var.ui.txtConcepto.setText(var.ui.tabServicios.item(row,1).text())
+            var.ui.txtPrecioUnidad.setText(var.ui.tabServicios.item(row,2).text())
+
+
+        except Exception as Error:
+            print('Error en mostrarFormSer' , Error)
