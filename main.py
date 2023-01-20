@@ -110,7 +110,7 @@ class Main(QtWidgets.QMainWindow):
             var.ui.btnBorrarServ.clicked.connect(Clients.Clientes.BorrarServ)
             var.ui.tabServicios.clicked.connect(Clients.Clientes.mostrarFormSer)
             var.ui.btnBuscarServicio.clicked.connect(events.Eventos.abrirBuscar)
-
+            var.ui.FrameShow.setScreen()
 
             var.ui.txtDni.editingFinished.connect(Clients.Clientes.mostraValidodni)
             var.ui.txtNombre.editingFinished.connect(events.Eventos.letrasCapital)
