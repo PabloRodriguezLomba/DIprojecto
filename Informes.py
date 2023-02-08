@@ -1,7 +1,9 @@
 from datetime import datetime
 
 from PyQt6 import QtSql
+from PyQt6.uic.properties import QtWidgets
 
+import conexion
 import var,os
 from reportlab.pdfgen import canvas
 class Informes:
@@ -110,3 +112,43 @@ class Informes:
 
         except Exception as Error:
             print("Error informes estado cliente",Error)
+
+        def factura(self):
+            try:
+                var.report = canvas.Canvas("Informes/Factura.pdf")
+                titulo = "FACTURA"
+                Informes.pieInforme()
+                Informes.topInforme()
+                cliente = []
+                nfac = str(var.ui.lblNumfac.text())
+                fechaFac = str(var.ui.txt)
+                if nfac == "":
+                    msg = QtWidgets.QMessageBox()
+                    msg.setWindowTitle('Aviso')
+                    msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                    msg.setText("Seleccione una Factura")
+                    msg.exec()
+                dni = str(var.ui.lblDnifact.text())
+                cliente = conexion.Conexion.oneCli(dni)
+
+
+
+                var.report.setFont("Helvetica-bold",size=9)
+                var.report.drawString(55,680,"Datos Cliente")
+                var.report.drawString(400,660," Nº Factura: ")
+                var.report.drawString(400,645,"Fecha Factura: ")
+                var.report.setFont("Helvetica", size=9)
+                var.report.drawString(55,675,"DNI/Cif" + str(dni))
+                var.report.drawString(480,660,str(infac))
+                var.report.drawString(480,645,str(fechaFac))
+                var.report.drawString(55,660,"Nombre" + str(cliente[0]))
+                var.report.drawString(55,645,"Direccion" + str(cliente[2]))
+                var.report.drawString(55,630,"Municipio" + str(cliente[4]))
+                var.report.drawString(55,615,"Provincia" + str(cliente[3]))
+                var.report.save()
+                reportPath = '.\\Informes'
+                for file in os.listdir(reportPath):
+                    if file.endswith('Factura.pdf'):
+                        os.startfile(os.path.join(reportPath, file))
+            except Exception as Error:
+                print("error en factura:", Error)

@@ -39,10 +39,20 @@ class Eventos:
             except Exception as error:
                 print("Error capitalizar letras",error)
 
-        def resizeTablacli(self):
+        def resizeTablacli(self = None):
             try:
                 header = var.ui.tabClientes.horizontalHeader()
                 for i in range(5):
+                    header.setSectionResizeMode(i,QtWidgets.QHeaderview.Stretch)
+                    if i == 0 or i == 1:
+                        print(' ')
+            except Exception as error:
+                print('errorrr')
+
+        def resizeTabVentas(self = None):
+            try:
+                header = var.ui.tabVentas.horizontalHeader()
+                for i in range(4):
                     header.setSectionResizeMode(i,QtWidgets.QHeaderview.Stretch)
                     if i == 0 or i == 1:
                         print(' ')
@@ -263,3 +273,15 @@ class Eventos:
                     var.dlgBuscar.hide()
             except Exception as Error:
                 print('Error en AbrirBuscar ',Error)
+
+        def calcularContxUnidad(self = None):
+            try:
+                total = 0;
+                numero = var.txtUnidades.text()
+                if numero != '':
+                    precio = var.ui.tabVentas.item(var.ui.tabVentas.currentRow(), 2).text()
+                    total = float(precio) * float(numero)
+                var.ui.tabVentas.setItem(var.ui.tabVentas.currentRow(),3,QtWidgets.QTableWidgetItem(str(total)))
+
+            except Exception as Error:
+                print("calcularContxUnidad error " , Error)

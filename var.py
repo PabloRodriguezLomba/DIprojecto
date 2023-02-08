@@ -11,3 +11,6 @@ global dlgDatos
 global dlgBuscar
 global bbdd
 global report
+global cmbservicio
+global txtUnidades
+global precio

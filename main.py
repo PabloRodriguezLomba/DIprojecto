@@ -7,6 +7,7 @@ import Clients
 import Informes
 import conexion
 import events
+import facturas
 from dlgBuscarSer import Ui_DialogBuscarSer
 from dlgDatos import Ui_dlgExportarDatos
 from dlgcalendar import Ui_dlgcalendar
@@ -94,6 +95,10 @@ class Main(QtWidgets.QMainWindow):
             header.setSectionResizeMode(QtWidgets.QHeaderView.sectionResizeMode(header, 0).Stretch)
             header2 = var.ui.tabServicios.horizontalHeader()
             header2.setSectionResizeMode(QtWidgets.QHeaderView.sectionResizeMode(header2, 0).Stretch)
+            header3 = var.ui.tabVentas.horizontalHeader()
+            header3.setSectionResizeMode(QtWidgets.QHeaderView.sectionResizeMode(header3, 0).Stretch)
+            facturas.facturas.cargaLineaVentana()
+            conexion.Conexion.cargaComboVentana()
             var.ui.tabClientes.setStyleSheet(
                 "QTableView::item:alternate { background-color: #C0C0C0; } QTableView::item { background-color: #d1c8c6; }")
             var.ui.tabServicios.setStyleSheet(
@@ -110,13 +115,15 @@ class Main(QtWidgets.QMainWindow):
             var.ui.btnBorrarServ.clicked.connect(Clients.Clientes.BorrarServ)
             var.ui.tabServicios.clicked.connect(Clients.Clientes.mostrarFormSer)
             var.ui.btnBuscarServicio.clicked.connect(events.Eventos.abrirBuscar)
-            var.ui.FrameShow.setScreen()
+
+
 
             var.ui.txtDni.editingFinished.connect(Clients.Clientes.mostraValidodni)
             var.ui.txtNombre.editingFinished.connect(events.Eventos.letrasCapital)
             var.ui.txtDircli.editingFinished.connect(events.Eventos.letrasCapital)
             var.ui.txtModelo.editingFinished.connect(events.Eventos.letrasCapital)
             var.ui.txtMarca.editingFinished.connect(events.Eventos.letrasCapital)
+
 
             var.ui.actionCrear_Copia_de_Seguridad.triggered.connect(events.Eventos.crearBackup)
             var.ui.actionRestaurar_Copia_de_Seguridad.triggered.connect(events.Eventos.restaurarBackup)
@@ -127,6 +134,11 @@ class Main(QtWidgets.QMainWindow):
             var.ui.actionExportar_Servicios.triggered.connect(events.Eventos.exportarServicios)
             var.ui.actionListado_de_Clientes.triggered.connect(Informes.Informes.listClientes)
             var.ui.actionListado_de_Coches.triggered.connect(Informes.Informes.listCoches)
+
+            var.cmbservicio.currentIndexChanged.connect(facturas.facturas.cargaPrecioVenta)
+            var.txtUnidades.textEdited.connect(events.Eventos.calcularContxUnidad)
+            a = QtWidgets.QComboBox(var.ui.tabVentas.item(1,0))
+            a.currentText()
 '''
             var.ui.actionSalir.triggered.connect(events.Eventos.Salir)
             var.ui.txtDni.editingFinished.connect(Clients.Clientes.mostraValidodni)

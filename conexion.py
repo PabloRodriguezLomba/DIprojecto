@@ -333,3 +333,34 @@ class Conexion():
         except Exception as Error:
             print('Error al dar de  alta a un servicio ', Error)
 
+
+    def cargaComboVentana(self = None):
+        try:
+            var.cmbservicio.clear()
+            query = QtSql.QSqlQuery()
+            query.prepare('select concepto from servicios order by concepto')
+            if query.exec():
+                while query.next():
+                    var.cmbservicio.addItem(str(query.value(0)))
+
+        except Exception as Error:
+            print ("cargarCombo Ventana" + Error)
+
+    def obtenerPrecio(servicio):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("select Precio from servicios where concepto = :servicio")
+            query.bindValue(":servicio",str(servicio))
+            if query.exec():
+                while query.next():
+                    precio = str(query.value(0))
+            return precio
+        except Exception as Error:
+            print("errro en obtener pricio",Error)
+
+    def CargaVenta(servicio):
+        try:
+            pass
+        except Exception as Error:
+            print("Error en cargaVenta ",Error)
+
