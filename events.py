@@ -277,7 +277,8 @@ class Eventos:
         def calcularContxUnidad(self = None):
             try:
                 total = 0;
-                numero = var.txtUnidades.text()
+                txto = var.ui.tabVentas.cellWidget(var.ui.tabVentas.currentRow(),1)
+                numero = txto.text()
                 if numero != '':
                     precio = var.ui.tabVentas.item(var.ui.tabVentas.currentRow(), 2).text()
                     total = float(precio) * float(numero)

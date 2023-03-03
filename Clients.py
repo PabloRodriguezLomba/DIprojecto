@@ -36,6 +36,9 @@ class Clientes():
             print('Error validar dni', error)
 
     def mostraValidodni(self=None):
+        """
+            modulo que valida espera a que se valide el dni y muestra un indicador de si es valido o no
+        """
         try:
             dni = var.ui.txtDni.text()
             if Clientes.validarDNI(dni):
@@ -79,6 +82,9 @@ class Clientes():
             print("Error seleccion motor", error)
 
     def guardarCli(self=None):
+        """
+        modulo que  toma los datos del cliente y coche y los pasa al modulo alta cli del fichero conexion
+        """
         try:
             newcli = []
             cliente = [var.ui.txtDni, var.ui.txtNombre, var.ui.txtFechaAltaClin, var.ui.txtModelo]
@@ -112,6 +118,9 @@ class Clientes():
             print('error')
 
     def limpiaCli(self=None):
+        """
+        Limpia el campo de los clientes
+        """
         try:
             cliente = [var.ui.txtDni, var.ui.txtNombre, var.ui.txtDircli, var.ui.txtFechaAltaClin, var.ui.txtMatricula,
                        var.ui.txtMarca, var.ui.txtModelo]
@@ -129,6 +138,9 @@ class Clientes():
             print('Error limpiar cliente', error)
 
     def borrarCli(self):
+        """
+            invoca el metodo borrarCli de conexion al cual
+        """
         try:
             dni = var.ui.txtDni.text()
             conexion.Conexion.borrarCli(dni)

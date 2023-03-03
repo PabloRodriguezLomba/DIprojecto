@@ -98,7 +98,7 @@ class Main(QtWidgets.QMainWindow):
             header3 = var.ui.tabVentas.horizontalHeader()
             header3.setSectionResizeMode(QtWidgets.QHeaderView.sectionResizeMode(header3, 0).Stretch)
             facturas.facturas.cargaLineaVentana()
-            conexion.Conexion.cargaComboVentana()
+
             var.ui.tabClientes.setStyleSheet(
                 "QTableView::item:alternate { background-color: #C0C0C0; } QTableView::item { background-color: #d1c8c6; }")
             var.ui.tabServicios.setStyleSheet(
@@ -137,8 +137,10 @@ class Main(QtWidgets.QMainWindow):
 
             var.cmbservicio.currentIndexChanged.connect(facturas.facturas.cargaPrecioVenta)
             var.txtUnidades.textEdited.connect(events.Eventos.calcularContxUnidad)
-            a = QtWidgets.QComboBox(var.ui.tabVentas.item(1,0))
-            a.currentText()
+            var.cmbservicio.currentIndexChanged.connect(facturas.facturas.createNewRow)
+
+
+
 '''
             var.ui.actionSalir.triggered.connect(events.Eventos.Salir)
             var.ui.txtDni.editingFinished.connect(Clients.Clientes.mostraValidodni)

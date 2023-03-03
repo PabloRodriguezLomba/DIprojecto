@@ -139,7 +139,7 @@ class Informes:
                 var.report.drawString(400,645,"Fecha Factura: ")
                 var.report.setFont("Helvetica", size=9)
                 var.report.drawString(55,675,"DNI/Cif" + str(dni))
-                var.report.drawString(480,660,str(infac))
+                var.report.drawString(480,660,str(nfac))
                 var.report.drawString(480,645,str(fechaFac))
                 var.report.drawString(55,660,"Nombre" + str(cliente[0]))
                 var.report.drawString(55,645,"Direccion" + str(cliente[2]))

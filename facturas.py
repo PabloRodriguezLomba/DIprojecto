@@ -1,6 +1,7 @@
 from reportlab.pdfgen import canvas
 
 import conexion
+import events
 import var
 from ventana import Ui_ventana
 from PyQt6 import QtSql
@@ -18,7 +19,7 @@ class facturas():
             var.ui.tabVentas.setRowCount(index +1)
             var.ui.tabVentas.setCellWidget(index,0,var.cmbservicio)
             var.ui.tabVentas.setCellWidget(index, 1, var.txtUnidades)
-
+            conexion.Conexion.cargaComboVentana()
 
         except Exception as Error:
             print("error en cargaLienaVentana facturas " + Error)
@@ -26,7 +27,9 @@ class facturas():
     def cargaPrecioVenta(self):
         try:
             row = var.ui.tabVentas.currentRow()
-            servicio = var.cmbservicio.currentText()
+
+            servicio = var.ui.tabVentas.cellWidget(row,0)
+            servicio = servicio.currentText()
             datos = conexion.Conexion.obtenerPrecio(servicio)
             precio = datos
             var.idser = datos[0]
@@ -98,14 +101,26 @@ class facturas():
 
     def createNewRow(self = None):
         try:
-            index = var.ui.tabVentas.rowCount() + 1;
-            var.ui.tabVentas.insertRow(index);
-            var.cmbservicio = QtWidgets.QComboBox()
-            var.txtUnidades = QtWidgets.QLineEdit()
-            var.txtUnidades.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-            var.ui.tabVentas.setCellWidget(index, 0, QtWidgets.QComboBox())
-            var.ui.tabVentas.setCellWidget(index, 1, QtWidgets.QLineEdit())
 
+            ruw = var.ui.tabVentas.currentRow()
+            total = var.ui.tabVentas.rowCount()
+            if total == 1:
+                total = -1
 
+            if int(var.ui.tabVentas.currentRow()) < int(var.ui.tabVentas.rowCount()):
+               pass
+            else:
+                index = var.ui.tabVentas.rowCount()
+                print(index)
+                var.ui.tabVentas.setRowCount(index + 1)
+                var.cmbservicio = QtWidgets.QComboBox()
+                var.txtUnidades = QtWidgets.QLineEdit()
+                var.cmbservicio.currentIndexChanged.connect(facturas.cargaPrecioVenta)
+                var.txtUnidades.textEdited.connect(events.Eventos.calcularContxUnidad)
+                var.txtUnidades.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                var.ui.tabVentas.setCellWidget(int(index), 0, var.cmbservicio)
+                var.ui.tabVentas.setCellWidget(int(index), 1, var.txtUnidades)
+                conexion.Conexion.cargaComboVentana()
+                var.cmbservicio.currentIndexChanged.connect(facturas.createNewRow)
         except Exception as Error:
             print("exception en createNewRow " , Error)
