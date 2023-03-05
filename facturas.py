@@ -102,12 +102,11 @@ class facturas():
     def createNewRow(self = None):
         try:
 
-            ruw = var.ui.tabVentas.currentRow()
+            ruw = var.ui.tabVentas.currentRow() + 1
             total = var.ui.tabVentas.rowCount()
-            if total == 1:
-                total = -1
 
-            if int(var.ui.tabVentas.currentRow()) < int(var.ui.tabVentas.rowCount()):
+
+            if int(ruw) < int(total):
                pass
             else:
                 index = var.ui.tabVentas.rowCount()
@@ -117,6 +116,7 @@ class facturas():
                 var.txtUnidades = QtWidgets.QLineEdit()
                 var.cmbservicio.currentIndexChanged.connect(facturas.cargaPrecioVenta)
                 var.txtUnidades.textEdited.connect(events.Eventos.calcularContxUnidad)
+                var.cmbservicio.currentIndexChanged.connect(facturas.createNewRow)
                 var.txtUnidades.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 var.ui.tabVentas.setCellWidget(int(index), 0, var.cmbservicio)
                 var.ui.tabVentas.setCellWidget(int(index), 1, var.txtUnidades)
@@ -124,3 +124,5 @@ class facturas():
                 var.cmbservicio.currentIndexChanged.connect(facturas.createNewRow)
         except Exception as Error:
             print("exception en createNewRow " , Error)
+
+

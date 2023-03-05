@@ -232,3 +232,24 @@ class Clientes():
 
         except Exception as Error:
             print('Error en mostrarFormSer' , Error)
+
+    def mostrarFormCli(self):
+        try:
+            row = var.ui.tabClientes.row(var.ui.tabClientes.currentItem())
+            var.ui.txtDni.setText(var.ui.tabClientes.item(row,0).text())
+            var.ui.txtMatricula.setText(var.ui.tabClientes.item(row,1).text())
+            var.ui.txtMarca.setText(var.ui.tabClientes.item(row,2).text())
+            var.ui.txtModelo.setText(var.ui.tabClientes.item(row,3).text())
+            if var.ui.tabClientes.item(row,4).text() == "Diesel":
+                var.ui.rbtDiesel.setChecked(True)
+            elif var.ui.tabClientes.item(row,4).text() == "Gasolina":
+                var.ui.rbtGasolina.setChecked(True)
+            elif var.ui.tabClientes.item(row,4).text() == "Hibrido":
+                var.ui.rbtHibrido.setChecked(True)
+            else:
+                var.ui.rbtElt.setChecked(True)
+
+
+
+        except Exception as Error:
+            print('Error en mostarFormCli',Error)

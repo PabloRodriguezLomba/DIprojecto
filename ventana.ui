@@ -3007,6 +3007,11 @@
          <string>Total</string>
         </property>
        </column>
+       <column>
+        <property name="text">
+         <string/>
+        </property>
+       </column>
       </widget>
      </widget>
      <widget class="QPushButton" name="pushButton_5">

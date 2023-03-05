@@ -364,3 +364,16 @@ class Conexion():
         except Exception as Error:
             print("Error en cargaVenta ",Error)
 
+    def conseguirCliente(dni):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare('select * from clientes where dni = :dni')
+            query.bindValue(':dni',str(dni))
+            if query.exec():
+                var.ui.txtDni.setText(str(query.value(1)))
+                var.ui.txtNombre.setText(str(query.value(0)))
+                var.ui.txtFechaAltaClin.setText(str(query.value(2)))
+                var.ui.txtDircli.setText(str(query.value(3)))
+
+        except Exception as Error:
+            print("eerror en conseguirCliente " , Error)
