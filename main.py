@@ -96,7 +96,13 @@ class Main(QtWidgets.QMainWindow):
             header2 = var.ui.tabServicios.horizontalHeader()
             header2.setSectionResizeMode(QtWidgets.QHeaderView.sectionResizeMode(header2, 0).Stretch)
             header3 = var.ui.tabVentas.horizontalHeader()
-            header3.setSectionResizeMode(QtWidgets.QHeaderView.sectionResizeMode(header3, 0).Stretch)
+            header3.resizeSection(4, 20)
+            header3.resizeSection(0,120)
+            header3.resizeSection(1,120)
+            header3.resizeSection(2,120)
+            header3.resizeSection(3,110)
+
+
             facturas.facturas.cargaLineaVentana()
 
             var.ui.tabClientes.setStyleSheet(

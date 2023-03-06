@@ -2987,6 +2987,12 @@
          <height>481</height>
         </rect>
        </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <column>
         <property name="text">
          <string>Servicio</string>
@@ -3014,31 +3020,6 @@
        </column>
       </widget>
      </widget>
-     <widget class="QPushButton" name="pushButton_5">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>50</y>
-        <width>80</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>80</width>
-        <height>20</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>80</width>
-        <height>25</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>PushButton</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pushButton">
       <property name="geometry">
        <rect>
@@ -3055,7 +3036,7 @@
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>430</x>
+        <x>360</x>
         <y>20</y>
         <width>191</width>
         <height>22</height>
@@ -3077,7 +3058,7 @@
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>560</x>
         <y>20</y>
         <width>211</width>
         <height>22</height>
@@ -3099,7 +3080,7 @@
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>170</x>
         <y>20</y>
         <width>178</width>
         <height>22</height>
@@ -3159,29 +3140,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_4">
-      <property name="geometry">
-       <rect>
-        <x>640</x>
-        <y>20</y>
-        <width>130</width>
-        <height>20</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_8">
-      <property name="geometry">
-       <rect>
-        <x>660</x>
-        <y>0</y>
-        <width>93</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Dni/Nº Matricula</string>
-      </property>
-     </widget>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
@@ -3212,7 +3170,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="BtnRecargarFact">
+        <widget class="QPushButton" name="BtnGuardarFact">
          <property name="minimumSize">
           <size>
            <width>23</width>

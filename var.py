@@ -14,3 +14,4 @@ global report
 global cmbservicio
 global txtUnidades
 global precio
+global btnBorrarFact

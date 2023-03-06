@@ -5,7 +5,7 @@ import events
 import var
 from ventana import Ui_ventana
 from PyQt6 import QtSql
-from PyQt6 import QtWidgets, QtCore
+from PyQt6 import QtWidgets, QtCore , QtGui
 
 class facturas():
 
@@ -15,10 +15,17 @@ class facturas():
             index = 0;
             var.cmbservicio = QtWidgets.QComboBox()
             var.txtUnidades = QtWidgets.QLineEdit()
+
+            var.cmbservicio.currentIndexChanged.connect(facturas.createNewRow)
+
+
+
+
             var.txtUnidades.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
             var.ui.tabVentas.setRowCount(index +1)
             var.ui.tabVentas.setCellWidget(index,0,var.cmbservicio)
             var.ui.tabVentas.setCellWidget(index, 1, var.txtUnidades)
+
             conexion.Conexion.cargaComboVentana()
 
         except Exception as Error:
@@ -107,22 +114,31 @@ class facturas():
 
 
             if int(ruw) < int(total):
-               pass
+                events.Eventos.calcularContxUnidad()
             else:
                 index = var.ui.tabVentas.rowCount()
                 print(index)
                 var.ui.tabVentas.setRowCount(index + 1)
                 var.cmbservicio = QtWidgets.QComboBox()
                 var.txtUnidades = QtWidgets.QLineEdit()
+                var.btnBorrarFact = QtWidgets.QPushButton()
                 var.cmbservicio.currentIndexChanged.connect(facturas.cargaPrecioVenta)
                 var.txtUnidades.textEdited.connect(events.Eventos.calcularContxUnidad)
                 var.cmbservicio.currentIndexChanged.connect(facturas.createNewRow)
+                var.btnBorrarFact.clicked.connect(facturas.deleteRow)
+                var.btnBorrarFact.setIcon(QtGui.QIcon('./img/papelera-de-reciclaje.png'))
                 var.txtUnidades.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 var.ui.tabVentas.setCellWidget(int(index), 0, var.cmbservicio)
                 var.ui.tabVentas.setCellWidget(int(index), 1, var.txtUnidades)
+                var.ui.tabVentas.setCellWidget(int(index),4, var.btnBorrarFact)
                 conexion.Conexion.cargaComboVentana()
                 var.cmbservicio.currentIndexChanged.connect(facturas.createNewRow)
         except Exception as Error:
             print("exception en createNewRow " , Error)
 
-
+    def deleteRow(self = None):
+        try:
+            ruw = var.ui.tabVentas.currentRow()
+            var.ui.tabVentas.removeRow(ruw)
+        except Exception as Error:
+            print("exception en deleteRow", Error)
