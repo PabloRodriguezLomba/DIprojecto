@@ -370,10 +370,26 @@ class Conexion():
             query.prepare('select * from clientes where dni = :dni')
             query.bindValue(':dni',str(dni))
             if query.exec():
-                var.ui.txtDni.setText(str(query.value(1)))
-                var.ui.txtNombre.setText(str(query.value(0)))
-                var.ui.txtFechaAltaClin.setText(str(query.value(2)))
-                var.ui.txtDircli.setText(str(query.value(3)))
-
+                while query.next():
+                    var.ui.txtNombre.setText(str(query.value(0)))
+                    var.ui.txtFechaAltaClin.setText(str(query.value(2)))
+                    var.ui.txtDircli.setText(str(query.value(3)))
+                    var.ui.cmbProcli.setCurrentIndex(var.ui.cmbProcli.findText(str(query.value(4))))
+                    var.ui.cmbMunicli.setCurrentIndex(var.ui.cmbMunicli.findText(str(query.value(5))))
+                    pago = str(query.value(6))
+                    if (pago == "Tarjeta"):
+                        var.ui.chkTarjeta.setChecked(True)
+                    elif (pago == "Efectivo"):
+                        var.ui.chkEfectivo.setChecked(True)
+                    else:
+                        var.ui.chkTransferencia.setChecked(True)
         except Exception as Error:
             print("eerror en conseguirCliente " , Error)
+
+    def guardarFactura(self):
+        try:
+            query = QtSql.QSqlQuery
+            query.prepare("insert into facturas (Dni,CodFactura,Fecha,Apellidos) values (:Dni,:CodFactura,:Fecha,:Apellidos)")
+
+        except Exception as Error:
+            print("error en guarfarFactura",Error)

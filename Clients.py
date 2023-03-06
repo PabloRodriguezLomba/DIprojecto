@@ -236,7 +236,8 @@ class Clientes():
     def mostrarFormCli(self):
         try:
             row = var.ui.tabClientes.row(var.ui.tabClientes.currentItem())
-            var.ui.txtDni.setText(var.ui.tabClientes.item(row,0).text())
+            dni = var.ui.tabClientes.item(row,0).text()
+            var.ui.txtDni.setText(dni)
             var.ui.txtMatricula.setText(var.ui.tabClientes.item(row,1).text())
             var.ui.txtMarca.setText(var.ui.tabClientes.item(row,2).text())
             var.ui.txtModelo.setText(var.ui.tabClientes.item(row,3).text())
@@ -248,7 +249,7 @@ class Clientes():
                 var.ui.rbtHibrido.setChecked(True)
             else:
                 var.ui.rbtElt.setChecked(True)
-
+            conexion.Conexion.conseguirCliente(var.ui.tabClientes.item(row,0).text())
 
 
         except Exception as Error:
