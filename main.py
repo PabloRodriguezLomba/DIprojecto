@@ -91,6 +91,7 @@ class Main(QtWidgets.QMainWindow):
             Clients.Clientes.selMotor()
             conexion.Conexion.mostrarTabcarcli()
             conexion.Conexion.mostrarTabServicios()
+            conexion.Conexion.mostrarTabFacturas()
             header = var.ui.tabClientes.horizontalHeader()
             header.setSectionResizeMode(QtWidgets.QHeaderView.sectionResizeMode(header, 0).Stretch)
             header2 = var.ui.tabServicios.horizontalHeader()

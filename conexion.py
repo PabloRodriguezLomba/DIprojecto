@@ -388,8 +388,58 @@ class Conexion():
 
     def guardarFactura(self):
         try:
+            var.codfact = 1;
+            count = 0;
+            ruw = var.ui.tabVentas.rowCount()
+
+            while (count < ruw):
+                cod = conexion.conseguirServicio(count)
+                query2 = QtSql.QSqlQuery
+                query2.prepare("insert into facturas (CodArticulo,Cantidad,CodFactura) values (:CodArticulo,:Cantidad,:CodFactura)")
+                query2.bindValue(":CodArticulo",int(cod))
+                query2.bindValue(":Cantidad",int(var.ui.tabVentas.cellWidget(count, 1).text()))
+                query2.bindValue(":CodFactura",int(var.codfact))
+
+                if (query2.exec()):
+                    count = count + 1
+
+
+
+
             query = QtSql.QSqlQuery
-            query.prepare("insert into facturas (Dni,CodFactura,Fecha,Apellidos) values (:Dni,:CodFactura,:Fecha,:Apellidos)")
+            query.prepare("insert into facturas (CodFactura,Dni,Fecha) values (:CodFactura,:Dni,:Fecha)")
+            query.bindValue(":CodFactura",int(var.codfact))
+            query.bindValue(":Dni",var.ui.txtDni.text())
+            query.bindValue(":Fecha",var.ui.txtFechaAltaClin)
+
+            if query.exec():
+                pass
+
 
         except Exception as Error:
             print("error en guarfarFactura",Error)
+
+    def conseguirServicio(num):
+        try:
+
+          query = QtSql.QSqlQuery
+          query.prepare("select Codigo from servicios where Concepto = :Concepto")
+          query.bindValue(":Concepto",var.ui.tabVentas.cellWidget(num, 0).text())
+          codigo = query.value(0)
+          return codigo
+        except Exception as Error:
+            print("error en conseguirServicio ",Error)
+
+    def mostrarTabFacturas(self = None):
+        try:
+            index = 0
+            query = QtSql.QSqlQuery
+            query.prepare("select CodFactura, Dni from Facturas")
+            if query.exec():
+                while query.next():
+                    var.ui.tabFacturas.setRowCount(index + 1)
+                    var.ui.tabFacturas.setItem(index, 0, QtWidgets.QTableWidgetItem(str(query.value(0))))
+                    var.ui.tabFacturas.setItem(index, 1, QtWidgets.QTableWidgetItem(str(query.value(1))))
+                    index += 1
+        except Exception as Error:
+            print("Error en mostrarTabVentas ", Error)

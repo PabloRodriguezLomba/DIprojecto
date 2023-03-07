@@ -15,3 +15,4 @@ global cmbservicio
 global txtUnidades
 global precio
 global btnBorrarFact
+global codfact

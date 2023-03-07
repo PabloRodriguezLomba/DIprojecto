@@ -2953,7 +2953,7 @@
        </property>
        <column>
         <property name="text">
-         <string>Nº de informe</string>
+         <string>Nº de Factura</string>
         </property>
        </column>
        <column>
@@ -3020,7 +3020,7 @@
        </column>
       </widget>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="btnGuardarFac">
       <property name="geometry">
        <rect>
         <x>410</x>
@@ -3030,7 +3030,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>PushButton</string>
+       <string>Guardar</string>
       </property>
      </widget>
      <widget class="QWidget" name="layoutWidget">
@@ -3129,7 +3129,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_7">
+        <widget class="QLabel" name="lblSubtotal">
          <property name="styleSheet">
           <string notr="true">background-color:yellow;</string>
          </property>
@@ -3152,25 +3152,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout_13">
        <item>
         <widget class="QPushButton" name="btnBuscarFact">
-         <property name="minimumSize">
-          <size>
-           <width>23</width>
-           <height>23</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>23</width>
-           <height>23</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="BtnGuardarFact">
          <property name="minimumSize">
           <size>
            <width>23</width>
