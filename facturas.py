@@ -142,3 +142,24 @@ class facturas():
             var.ui.tabVentas.removeRow(ruw)
         except Exception as Error:
             print("exception en deleteRow", Error)
+
+    def subtotal(self = None):
+        try:
+            total = 0
+            rows = 0
+            ruw = var.ui.tabVentas.rowCount()
+            last = ruw - 1
+            cello = var.ui.tabVentas.cellWidget(last, 1)
+            cello = cello.text()
+            if cello == "":
+                ruw = ruw - 1
+
+            while(rows < ruw):
+                cant = var.ui.tabVentas.item(rows,3)
+                cant = cant.text()
+                total = float(total) + float(cant)
+                rows = rows + 1
+
+            var.ui.lblSubtotal.setText(str(total))
+        except Exception as Error:
+            print("subtotal",Error)

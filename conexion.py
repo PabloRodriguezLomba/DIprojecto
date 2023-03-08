@@ -391,30 +391,52 @@ class Conexion():
             var.codfact = 1;
             count = 0;
             ruw = var.ui.tabVentas.rowCount()
+            last = ruw - 1
+            cello = var.ui.tabVentas.cellWidget(last, 1)
+            cello = cello.text()
+            if cello == "":
+                ruw = ruw - 1
 
             while (count < ruw):
-                cod = conexion.conseguirServicio(count)
-                query2 = QtSql.QSqlQuery
-                query2.prepare("insert into facturas (CodArticulo,Cantidad,CodFactura) values (:CodArticulo,:Cantidad,:CodFactura)")
+                cod = Conexion.conseguirServicio(count)
+                query2 = QtSql.QSqlQuery()
+                query2.prepare('insert into Ventas (CodArticulo,Cantidad,CodFactura) VALUES (:CodArticulo,:Cantidad,:CodFactura)')
+                cell = var.ui.tabVentas.cellWidget(count, 1)
+                cell = cell.text()
+                fact = var.codfact
                 query2.bindValue(":CodArticulo",int(cod))
-                query2.bindValue(":Cantidad",int(var.ui.tabVentas.cellWidget(count, 1).text()))
-                query2.bindValue(":CodFactura",int(var.codfact))
+                query2.bindValue(":Cantidad",int(cell))
+                query2.bindValue(":CodFactura",int(fact))
+                count = count + 1
 
-                if (query2.exec()):
-                    count = count + 1
+                if query2.exec():
+                   print("gog")
+                else:
+                    print("no")
 
 
+            query3 = QtSql.QSqlQuery()
+            query3.prepare('select * from facturas order by CodFactura DESC')
 
+            codFact = 1
 
-            query = QtSql.QSqlQuery
-            query.prepare("insert into facturas (CodFactura,Dni,Fecha) values (:CodFactura,:Dni,:Fecha)")
-            query.bindValue(":CodFactura",int(var.codfact))
+            if query3.exec():
+                while query3.next():
+                    codFact = query3.value(0)
+                    print(codFact)
+                    codFact = codFact + 1
+                    break
+
+            query = QtSql.QSqlQuery()
+            query.prepare('insert into facturas (CodFactura,Dni,Fecha) values (:CodFactura,:Dni,:Fecha)')
+            query.bindValue(":CodFactura",int(codFact))
             query.bindValue(":Dni",var.ui.txtDni.text())
-            query.bindValue(":Fecha",var.ui.txtFechaAltaClin)
+            query.bindValue(":Fecha",var.ui.txtFechaAltaClin.text())
 
             if query.exec():
                 pass
 
+            Conexion.mostrarTabFacturas()
 
         except Exception as Error:
             print("error en guarfarFactura",Error)
@@ -422,10 +444,14 @@ class Conexion():
     def conseguirServicio(num):
         try:
 
-          query = QtSql.QSqlQuery
-          query.prepare("select Codigo from servicios where Concepto = :Concepto")
-          query.bindValue(":Concepto",var.ui.tabVentas.cellWidget(num, 0).text())
-          codigo = query.value(0)
+          query = QtSql.QSqlQuery()
+          query.prepare("select Codigo from servicios where concepto = :Concepto")
+          servicio = var.ui.tabVentas.cellWidget(num, 0)
+          servicio = servicio.currentText()
+          query.bindValue(":Concepto",servicio)
+          if query.exec():
+              while query.next():
+                codigo = query.value(0)
           return codigo
         except Exception as Error:
             print("error en conseguirServicio ",Error)
@@ -433,7 +459,7 @@ class Conexion():
     def mostrarTabFacturas(self = None):
         try:
             index = 0
-            query = QtSql.QSqlQuery
+            query = QtSql.QSqlQuery()
             query.prepare("select CodFactura, Dni from Facturas")
             if query.exec():
                 while query.next():
@@ -442,4 +468,19 @@ class Conexion():
                     var.ui.tabFacturas.setItem(index, 1, QtWidgets.QTableWidgetItem(str(query.value(1))))
                     index += 1
         except Exception as Error:
-            print("Error en mostrarTabVentas ", Error)
+            print("Error en mostrarTabFacturas", Error)
+
+    def conseguirFact(codigo,cliente):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare('select * from Facturas where CodFactura = :CodFactura and Dni = :Dni')
+            query.bindValue(":CodFactura",codigo)
+            query.bindValue(":Dni",cliente)
+            if query.exec():
+                while query.next():
+                    var.ui.txtDniFact.setText(str(query.value(1)))
+                    var.ui.txtMatriculaFact.setText(str(query.value(0)))
+                    var.ui.txtFechaFact.setText(str(query.value(2)))
+
+        except Exception as Error:
+            print("Error en conseguir Fact" , Error)

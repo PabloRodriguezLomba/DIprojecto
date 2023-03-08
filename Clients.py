@@ -254,3 +254,12 @@ class Clientes():
 
         except Exception as Error:
             print('Error en mostarFormCli',Error)
+
+    def mostrarFormFact(self):
+        try:
+            row = var.ui.tabFacturas.row(var.ui.tabFacturas.currentItem())
+            NFact = var.ui.tabFacturas.item(row,0).text()
+            cliente = var.ui.tabFacturas.item(row,1).text()
+            conexion.Conexion.conseguirFact(NFact,cliente)
+        except Exception as Error:
+            print("Erroren mostrarFormFact",Error)

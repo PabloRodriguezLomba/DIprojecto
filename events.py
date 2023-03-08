@@ -11,6 +11,7 @@ from PyQt6 import QtCore
 
 import Clients
 import conexion
+import facturas
 import var
 
 
@@ -283,6 +284,6 @@ class Eventos:
                     precio = var.ui.tabVentas.item(var.ui.tabVentas.currentRow(), 2).text()
                     total = float(precio) * float(numero)
                 var.ui.tabVentas.setItem(var.ui.tabVentas.currentRow(),3,QtWidgets.QTableWidgetItem(str(total)))
-
+                facturas.facturas.subtotal()
             except Exception as Error:
                 print("calcularContxUnidad error " , Error)

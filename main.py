@@ -123,6 +123,8 @@ class Main(QtWidgets.QMainWindow):
             var.ui.tabServicios.clicked.connect(Clients.Clientes.mostrarFormSer)
             var.ui.btnBuscarServicio.clicked.connect(events.Eventos.abrirBuscar)
             var.ui.tabClientes.clicked.connect(Clients.Clientes.mostrarFormCli)
+            var.ui.btnGuardarFac.clicked.connect(conexion.Conexion.guardarFactura)
+            var.ui.tabFacturas.clicked.connect(Clients.Clientes.mostrarFormFact)
 
 
             var.ui.txtDni.editingFinished.connect(Clients.Clientes.mostraValidodni)
